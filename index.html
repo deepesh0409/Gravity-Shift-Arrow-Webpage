@@ -3,42 +3,29 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Gravity Shift Arrows — Calming Neon Puzzle Game</title>
-  <meta name="description" content="Official website, Privacy Policy, Terms of Service, and Support for Gravity Shift Arrows - a minimalist neon arrow puzzle game on Android.">
+  <title>Gravity Shift Arrows — An Indie Neon Puzzle Game</title>
+  <meta name="description" content="Gravity Shift Arrows is a chill, offline indie puzzle game on Android. Rotate glowing arrows, beat the levels, and enjoy zero ads or data tracking.">
   <link rel="icon" type="image/png" href="assets/icon-512.png">
 
-  <!-- Google Fonts -->
+  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
 
   <style>
     :root {
-      --bg-deep: #070a13;
-      --bg-card: rgba(15, 23, 42, 0.72);
-      --bg-card-hover: rgba(26, 38, 66, 0.85);
-      --border-subtle: rgba(255, 255, 255, 0.08);
-      --border-glow: rgba(0, 245, 255, 0.35);
-      
+      --bg: #090d16;
+      --card-bg: rgba(16, 24, 40, 0.7);
+      --card-border: rgba(255, 255, 255, 0.08);
       --cyan: #00F5FF;
-      --cyan-glow: rgba(0, 245, 255, 0.4);
+      --cyan-soft: rgba(0, 245, 255, 0.15);
       --purple: #B24BF3;
-      --purple-glow: rgba(178, 75, 243, 0.4);
-      --emerald: #10B981;
-      --amber: #F59E0B;
-      
-      --text-main: #F1F5F9;
+      --green: #10B981;
+      --text: #F8FAFC;
       --text-muted: #94A3B8;
       --text-dim: #64748B;
-      
-      --font-heading: 'Outfit', sans-serif;
-      --font-body: 'Plus Jakarta Sans', sans-serif;
-      --font-mono: 'JetBrains Mono', monospace;
-      
-      --radius-sm: 8px;
-      --radius-md: 14px;
-      --radius-lg: 22px;
-      --radius-full: 9999px;
+      --font-display: 'Space Grotesk', sans-serif;
+      --font-sans: 'Plus Jakarta Sans', sans-serif;
     }
 
     * {
@@ -48,83 +35,51 @@
       -webkit-tap-highlight-color: transparent;
     }
 
-    html {
-      scroll-behavior: smooth;
-      color-scheme: dark;
-    }
-
     body {
-      background-color: var(--bg-deep);
-      color: var(--text-main);
-      font-family: var(--font-body);
-      line-height: 1.6;
-      min-height: 100vh;
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: var(--font-sans);
+      line-height: 1.65;
       overflow-x: hidden;
-      position: relative;
+      selection-background-color: var(--cyan);
     }
 
-    /* Ambient background glowing orbs */
-    .ambient-bg {
+    /* Ambient soft background glow */
+    .glow-blob {
       position: fixed;
-      inset: 0;
+      border-radius: 50%;
+      filter: blur(140px);
       pointer-events: none;
       z-index: 0;
-      overflow: hidden;
+      opacity: 0.18;
     }
-
-    .orb {
-      position: absolute;
-      border-radius: 50%;
-      filter: blur(120px);
-      opacity: 0.22;
-      animation: float 14s ease-in-out infinite alternate;
-    }
-
-    .orb-1 {
+    .blob-1 {
+      top: -100px;
+      left: 15%;
       width: 450px;
       height: 450px;
       background: var(--cyan);
-      top: -80px;
-      left: -80px;
     }
-
-    .orb-2 {
+    .blob-2 {
+      bottom: 20%;
+      right: 10%;
       width: 500px;
       height: 500px;
       background: var(--purple);
-      bottom: 10%;
-      right: -100px;
-      animation-delay: -6s;
     }
 
-    .orb-3 {
-      width: 320px;
-      height: 320px;
-      background: #3B82F6;
-      top: 45%;
-      left: 30%;
-      animation-delay: -3s;
-      opacity: 0.15;
-    }
-
-    @keyframes float {
-      0% { transform: translate(0, 0) scale(1); }
-      100% { transform: translate(40px, 35px) scale(1.08); }
-    }
-
-    /* Header & Navigation */
+    /* Nav */
     header {
       position: sticky;
       top: 0;
-      z-index: 100;
-      background: rgba(7, 10, 19, 0.82);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border-bottom: 1px solid var(--border-subtle);
+      z-index: 50;
+      background: rgba(9, 13, 22, 0.85);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--card-border);
     }
 
-    .nav-container {
-      max-width: 1200px;
+    .nav-inner {
+      max-width: 1100px;
       margin: 0 auto;
       padding: 16px 24px;
       display: flex;
@@ -137,36 +92,21 @@
       align-items: center;
       gap: 12px;
       text-decoration: none;
-      color: var(--text-main);
+      color: var(--text);
     }
 
-    .brand-icon {
-      width: 40px;
-      height: 40px;
-      border-radius: 10px;
-      overflow: hidden;
-      box-shadow: 0 0 16px var(--cyan-glow);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: #111827;
-      border: 1px solid rgba(0, 245, 255, 0.4);
+    .brand img {
+      width: 36px;
+      height: 36px;
+      border-radius: 9px;
+      box-shadow: 0 2px 10px rgba(0, 245, 255, 0.3);
     }
 
-    .brand-icon img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    .brand-name {
-      font-family: var(--font-heading);
-      font-size: 1.25rem;
+    .brand-title {
+      font-family: var(--font-display);
       font-weight: 700;
-      letter-spacing: -0.02em;
-      background: linear-gradient(135deg, #ffffff 40%, var(--cyan) 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+      font-size: 1.15rem;
+      letter-spacing: -0.01em;
     }
 
     nav {
@@ -175,1366 +115,922 @@
       gap: 24px;
     }
 
-    .nav-link {
+    nav a {
       color: var(--text-muted);
       text-decoration: none;
       font-size: 0.92rem;
       font-weight: 500;
-      transition: all 0.2s ease;
-      position: relative;
+      transition: color 0.2s ease;
     }
 
-    .nav-link:hover, .nav-link.active {
+    nav a:hover, nav a.active {
       color: var(--cyan);
     }
 
-    .nav-link.active::after {
-      content: '';
-      position: absolute;
-      bottom: -4px;
-      left: 0;
-      width: 100%;
-      height: 2px;
+    .nav-cta {
+      background: rgba(0, 245, 255, 0.12);
+      border: 1px solid rgba(0, 245, 255, 0.35);
+      color: var(--cyan) !important;
+      padding: 7px 16px;
+      border-radius: 99px;
+      font-weight: 600 !important;
+      transition: all 0.2s ease;
+    }
+
+    .nav-cta:hover {
       background: var(--cyan);
-      box-shadow: 0 0 8px var(--cyan);
-      border-radius: 2px;
+      color: #090d16 !important;
     }
 
-    .nav-btn {
-      background: linear-gradient(135deg, var(--cyan), #00B4D8);
-      color: #050b14;
-      font-weight: 700;
-      font-size: 0.88rem;
-      padding: 9px 18px;
-      border-radius: var(--radius-full);
-      text-decoration: none;
-      box-shadow: 0 4px 18px var(--cyan-glow);
-      transition: all 0.25s ease;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .nav-btn:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 6px 24px rgba(0, 245, 255, 0.6);
-    }
-
-    /* Mobile Menu Toggle */
-    .menu-toggle {
-      display: none;
-      background: transparent;
-      border: none;
-      color: var(--text-main);
-      font-size: 1.5rem;
-      cursor: pointer;
-    }
-
-    /* Main Container */
+    /* Layout */
     main {
       position: relative;
       z-index: 1;
-      max-width: 1200px;
+      max-width: 1100px;
       margin: 0 auto;
       padding: 0 24px 80px;
     }
 
-    /* Hero Section */
+    /* Hero */
     .hero {
-      padding: 64px 0 72px;
+      padding: 70px 0 60px;
       display: grid;
-      grid-template-columns: 1.15fr 0.85fr;
+      grid-template-columns: 1.1fr 0.9fr;
       align-items: center;
-      gap: 48px;
+      gap: 50px;
     }
 
-    .hero-badge {
+    .indie-badge {
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      padding: 6px 14px;
-      border-radius: var(--radius-full);
-      background: rgba(0, 245, 255, 0.08);
-      border: 1px solid rgba(0, 245, 255, 0.25);
-      color: var(--cyan);
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: #E2E8F0;
       font-size: 0.82rem;
       font-weight: 600;
-      letter-spacing: 0.03em;
-      text-transform: uppercase;
+      padding: 5px 14px;
+      border-radius: 99px;
       margin-bottom: 20px;
-      box-shadow: 0 0 16px rgba(0, 245, 255, 0.15);
     }
 
-    .hero-badge .pulse {
+    .indie-badge .dot {
       width: 7px;
       height: 7px;
-      background: var(--cyan);
       border-radius: 50%;
-      box-shadow: 0 0 8px var(--cyan);
-      animation: ping 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+      background: var(--green);
+      box-shadow: 0 0 6px var(--green);
     }
 
-    @keyframes ping {
-      0% { opacity: 1; transform: scale(1); }
-      75%, 100% { opacity: 0; transform: scale(2.2); }
-    }
-
-    .hero-title {
-      font-family: var(--font-heading);
-      font-size: 3.4rem;
-      font-weight: 800;
-      line-height: 1.12;
+    h1 {
+      font-family: var(--font-display);
+      font-size: 3.2rem;
+      line-height: 1.15;
       letter-spacing: -0.03em;
       margin-bottom: 20px;
     }
 
-    .hero-title span {
-      background: linear-gradient(135deg, var(--cyan) 0%, var(--purple) 100%);
+    h1 span {
+      background: linear-gradient(135deg, var(--cyan), #c084fc);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      text-shadow: 0 0 40px rgba(0, 245, 255, 0.3);
     }
 
-    .hero-subtitle {
-      font-size: 1.15rem;
+    .hero-lead {
       color: var(--text-muted);
-      max-width: 540px;
-      line-height: 1.68;
-      margin-bottom: 32px;
+      font-size: 1.12rem;
+      line-height: 1.65;
+      margin-bottom: 30px;
+      max-width: 500px;
     }
 
-    .hero-actions {
+    .hero-buttons {
       display: flex;
       flex-wrap: wrap;
-      gap: 16px;
       align-items: center;
-      margin-bottom: 40px;
+      gap: 16px;
+      margin-bottom: 36px;
     }
 
-    .playstore-badge {
+    .play-btn {
       display: inline-flex;
       align-items: center;
-      gap: 14px;
-      background: #0D1527;
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      padding: 10px 22px;
-      border-radius: var(--radius-md);
+      gap: 12px;
+      background: #0f172a;
+      border: 1px solid rgba(255, 255, 255, 0.18);
       color: #fff;
       text-decoration: none;
+      padding: 10px 20px;
+      border-radius: 12px;
       transition: all 0.25s ease;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+      cursor: pointer;
     }
 
-    .playstore-badge:hover {
+    .play-btn:hover {
       border-color: var(--cyan);
       transform: translateY(-2px);
-      box-shadow: 0 10px 28px rgba(0, 245, 255, 0.2);
+      box-shadow: 0 8px 24px rgba(0, 245, 255, 0.15);
     }
 
-    .playstore-icon svg {
-      width: 28px;
-      height: 28px;
+    .play-btn svg {
+      width: 26px;
+      height: 26px;
     }
 
-    .playstore-text {
+    .play-btn-text {
       text-align: left;
     }
 
-    .playstore-sub {
+    .play-btn-sub {
       font-size: 0.68rem;
       text-transform: uppercase;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.06em;
       color: var(--text-muted);
-      font-weight: 600;
     }
 
-    .playstore-main {
-      font-family: var(--font-heading);
-      font-size: 1.15rem;
+    .play-btn-main {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
       font-weight: 700;
       line-height: 1.2;
     }
 
-    .hero-highlights {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 16px;
-      max-width: 540px;
+    .secondary-btn {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.92rem;
+      font-weight: 600;
+      padding: 11px 18px;
+      border-radius: 12px;
+      border: 1px solid var(--card-border);
+      background: rgba(255, 255, 255, 0.03);
+      transition: all 0.2s ease;
     }
 
-    .highlight-item {
-      background: rgba(15, 23, 42, 0.5);
-      border: 1px solid var(--border-subtle);
-      border-radius: var(--radius-md);
-      padding: 12px 16px;
+    .secondary-btn:hover {
+      color: var(--text);
+      border-color: rgba(255, 255, 255, 0.2);
     }
 
-    .highlight-number {
-      font-family: var(--font-heading);
-      font-size: 1.35rem;
-      font-weight: 800;
-      color: var(--cyan);
-    }
-
-    .highlight-label {
-      font-size: 0.8rem;
+    .quick-perks {
+      display: flex;
+      gap: 24px;
+      font-size: 0.88rem;
       color: var(--text-muted);
     }
 
-    /* Interactive Game Preview Card */
-    .interactive-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border-glow);
-      border-radius: var(--radius-lg);
+    .quick-perks span {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .quick-perks svg {
+      color: var(--cyan);
+    }
+
+    /* Live Mini Game Widget */
+    .board-preview-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
       padding: 28px;
-      backdrop-filter: blur(20px);
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), 0 0 40px rgba(0, 245, 255, 0.12);
+      box-shadow: 0 20px 45px rgba(0, 0, 0, 0.4);
       text-align: center;
       position: relative;
     }
 
-    .card-header-tag {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
+    .preview-tag {
       font-size: 0.78rem;
       font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 0.06em;
+      letter-spacing: 0.08em;
       color: var(--cyan);
-      margin-bottom: 12px;
+      margin-bottom: 6px;
     }
 
-    .mini-game-container {
-      margin: 20px auto;
+    .preview-subtitle {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      margin-bottom: 20px;
+    }
+
+    .mini-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 14px;
-      max-width: 280px;
+      gap: 12px;
+      max-width: 270px;
+      margin: 0 auto;
     }
 
-    .arrow-cell {
+    .arrow-box {
       aspect-ratio: 1;
-      background: rgba(13, 21, 39, 0.9);
-      border: 2px solid rgba(0, 245, 255, 0.3);
-      border-radius: var(--radius-md);
+      background: rgba(13, 20, 36, 0.9);
+      border: 2px solid rgba(0, 245, 255, 0.25);
+      border-radius: 12px;
       display: flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
       user-select: none;
-      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      transition: all 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
 
-    .arrow-cell:hover {
+    .arrow-box:hover {
       border-color: var(--cyan);
       transform: scale(1.06);
-      box-shadow: 0 0 16px var(--cyan-glow);
+      box-shadow: 0 0 14px rgba(0, 245, 255, 0.3);
     }
 
-    .arrow-cell:active {
-      transform: scale(0.95);
-    }
-
-    .arrow-cell.aligned {
-      border-color: var(--emerald);
+    .arrow-box.solved {
+      border-color: var(--green);
       background: rgba(16, 185, 129, 0.12);
-      box-shadow: 0 0 18px rgba(16, 185, 129, 0.4);
+      box-shadow: 0 0 16px rgba(16, 185, 129, 0.35);
     }
 
-    .arrow-svg {
-      width: 44px;
-      height: 44px;
+    .arrow-box svg {
+      width: 40px;
+      height: 40px;
       transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
 
-    .arrow-cell.aligned .arrow-svg path {
-      stroke: var(--emerald);
-      filter: drop-shadow(0 0 6px var(--emerald));
+    .arrow-box.solved svg path {
+      stroke: var(--green);
     }
 
-    .arrow-cell:not(.aligned) .arrow-svg path {
+    .arrow-box:not(.solved) svg path {
       stroke: var(--cyan);
-      filter: drop-shadow(0 0 6px var(--cyan));
     }
 
-    .game-status {
+    .game-message {
       margin-top: 18px;
-      font-size: 0.92rem;
+      font-size: 0.9rem;
       font-weight: 600;
-      min-height: 26px;
+      min-height: 24px;
       color: var(--text-muted);
     }
 
-    .game-status.win {
-      color: var(--emerald);
-      animation: pulseWin 1s ease infinite alternate;
+    .game-message.win {
+      color: var(--green);
     }
 
-    @keyframes pulseWin {
-      from { transform: scale(1); filter: drop-shadow(0 0 2px var(--emerald)); }
-      to { transform: scale(1.05); filter: drop-shadow(0 0 8px var(--emerald)); }
-    }
-
-    .game-hint {
-      font-size: 0.8rem;
+    .game-subtip {
+      font-size: 0.78rem;
       color: var(--text-dim);
-      margin-top: 8px;
+      margin-top: 6px;
     }
 
-    /* Section Headers */
-    .section-title {
-      font-family: var(--font-heading);
-      font-size: 2.3rem;
-      font-weight: 800;
+    /* Section Styling */
+    section {
+      padding: 60px 0 20px;
+    }
+
+    .section-head {
+      margin-bottom: 40px;
+    }
+
+    .section-head h2 {
+      font-family: var(--font-display);
+      font-size: 2.1rem;
       letter-spacing: -0.02em;
-      margin-bottom: 12px;
-      text-align: center;
-    }
-
-    .section-subtitle {
-      text-align: center;
-      color: var(--text-muted);
-      font-size: 1.05rem;
-      max-width: 620px;
-      margin: 0 auto 48px;
-    }
-
-    /* Feature Grid */
-    .features-section {
-      padding: 72px 0;
-    }
-
-    .features-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
-      gap: 24px;
-    }
-
-    .feature-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border-subtle);
-      border-radius: var(--radius-lg);
-      padding: 32px 26px;
-      transition: all 0.3s ease;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .feature-card:hover {
-      border-color: rgba(0, 245, 255, 0.4);
-      transform: translateY(-4px);
-      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.5), 0 0 24px rgba(0, 245, 255, 0.1);
-    }
-
-    .feature-icon-wrapper {
-      width: 52px;
-      height: 52px;
-      border-radius: var(--radius-md);
-      background: rgba(0, 245, 255, 0.1);
-      border: 1px solid rgba(0, 245, 255, 0.25);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 20px;
-      color: var(--cyan);
-    }
-
-    .feature-card:nth-child(2) .feature-icon-wrapper {
-      background: rgba(178, 75, 243, 0.1);
-      border-color: rgba(178, 75, 243, 0.25);
-      color: var(--purple);
-    }
-
-    .feature-card:nth-child(3) .feature-icon-wrapper {
-      background: rgba(16, 185, 129, 0.1);
-      border-color: rgba(16, 185, 129, 0.25);
-      color: var(--emerald);
-    }
-
-    .feature-card:nth-child(4) .feature-icon-wrapper {
-      background: rgba(245, 158, 11, 0.1);
-      border-color: rgba(245, 158, 11, 0.25);
-      color: var(--amber);
-    }
-
-    .feature-title {
-      font-family: var(--font-heading);
-      font-size: 1.25rem;
-      font-weight: 700;
       margin-bottom: 10px;
     }
 
-    .feature-desc {
+    .section-head p {
       color: var(--text-muted);
-      font-size: 0.94rem;
-      line-height: 1.62;
+      font-size: 1.05rem;
+      max-width: 600px;
     }
 
-    /* Tabs Navigation for Google Play Submission Requirements */
-    .compliance-section {
-      padding: 72px 0 32px;
-      border-top: 1px solid var(--border-subtle);
+    /* Features Grid */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 20px;
     }
 
-    .tabs-nav {
+    .feature-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 26px 22px;
+      transition: transform 0.2s, border-color 0.2s;
+    }
+
+    .feature-card:hover {
+      border-color: rgba(255, 255, 255, 0.18);
+      transform: translateY(-3px);
+    }
+
+    .feature-emoji {
+      font-size: 1.8rem;
+      margin-bottom: 14px;
+      display: inline-block;
+    }
+
+    .feature-card h3 {
+      font-family: var(--font-display);
+      font-size: 1.15rem;
+      margin-bottom: 8px;
+    }
+
+    .feature-card p {
+      color: var(--text-muted);
+      font-size: 0.92rem;
+      line-height: 1.55;
+    }
+
+    /* Tabs & Legal / Store Pages */
+    .tabs-wrapper {
+      margin-top: 20px;
+    }
+
+    .tab-bar {
       display: flex;
-      justify-content: center;
-      gap: 12px;
+      gap: 10px;
       flex-wrap: wrap;
-      margin-bottom: 36px;
+      margin-bottom: 24px;
+      border-bottom: 1px solid var(--card-border);
+      padding-bottom: 16px;
     }
 
     .tab-btn {
-      background: rgba(15, 23, 42, 0.6);
-      border: 1px solid var(--border-subtle);
+      background: transparent;
+      border: 1px solid var(--card-border);
       color: var(--text-muted);
-      padding: 12px 22px;
-      border-radius: var(--radius-full);
-      font-family: var(--font-body);
-      font-size: 0.94rem;
+      padding: 9px 18px;
+      border-radius: 99px;
+      font-family: var(--font-sans);
+      font-size: 0.9rem;
       font-weight: 600;
       cursor: pointer;
-      transition: all 0.25s ease;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
+      transition: all 0.2s;
     }
 
     .tab-btn:hover {
-      color: var(--text-main);
-      border-color: rgba(255, 255, 255, 0.2);
+      color: var(--text);
+      border-color: rgba(255, 255, 255, 0.25);
     }
 
     .tab-btn.active {
-      background: rgba(0, 245, 255, 0.12);
+      background: var(--cyan-soft);
       border-color: var(--cyan);
       color: var(--cyan);
-      box-shadow: 0 0 20px rgba(0, 245, 255, 0.2);
     }
 
-    .tab-content {
+    .doc-box {
       display: none;
-      background: var(--bg-card);
-      border: 1px solid var(--border-subtle);
-      border-radius: var(--radius-lg);
-      padding: 44px;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
-      animation: fadeIn 0.3s ease;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      padding: 38px 32px;
     }
 
-    .tab-content.active {
+    .doc-box.active {
       display: block;
+      animation: fadeIn 0.25s ease;
     }
 
     @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(8px); }
+      from { opacity: 0; transform: translateY(6px); }
       to { opacity: 1; transform: translateY(0); }
     }
 
-    /* Document Prose Styling */
-    .doc-prose h2 {
-      font-family: var(--font-heading);
+    .doc-box h2 {
+      font-family: var(--font-display);
       font-size: 1.6rem;
-      color: var(--cyan);
-      margin: 32px 0 14px;
-      padding-bottom: 8px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-    }
-
-    .doc-prose h2:first-of-type {
-      margin-top: 0;
-    }
-
-    .doc-prose h3 {
-      font-family: var(--font-heading);
-      font-size: 1.2rem;
-      color: #E2E8F0;
-      margin: 22px 0 10px;
-    }
-
-    .doc-prose p {
-      color: #CBD5E1;
-      font-size: 0.98rem;
-      margin-bottom: 16px;
-      line-height: 1.72;
-    }
-
-    .doc-prose ul {
-      margin: 0 0 20px 24px;
-      color: #CBD5E1;
-    }
-
-    .doc-prose li {
       margin-bottom: 8px;
-      line-height: 1.65;
+      color: var(--text);
     }
 
-    .doc-badge {
-      display: inline-block;
-      padding: 4px 12px;
-      border-radius: var(--radius-full);
-      font-size: 0.78rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-      margin-bottom: 14px;
+    .doc-date {
+      color: var(--text-dim);
+      font-size: 0.86rem;
+      margin-bottom: 24px;
     }
 
-    .doc-badge.green {
-      background: rgba(16, 185, 129, 0.15);
-      border: 1px solid rgba(16, 185, 129, 0.3);
-      color: #34D399;
-    }
-
-    .doc-badge.blue {
-      background: rgba(0, 245, 255, 0.15);
-      border: 1px solid rgba(0, 245, 255, 0.3);
+    .doc-box h3 {
+      font-family: var(--font-display);
+      font-size: 1.15rem;
       color: var(--cyan);
+      margin: 28px 0 10px;
     }
 
-    .info-callout {
-      background: rgba(0, 245, 255, 0.06);
-      border-left: 4px solid var(--cyan);
-      padding: 16px 20px;
-      border-radius: 0 var(--radius-md) var(--radius-md) 0;
-      margin: 24px 0;
+    .doc-box p {
+      color: #CBD5E1;
+      font-size: 0.96rem;
+      margin-bottom: 14px;
+      line-height: 1.68;
     }
 
-    .info-callout p {
-      margin: 0;
-      color: #E2E8F0;
+    .doc-box ul {
+      margin: 0 0 18px 24px;
+      color: #CBD5E1;
       font-size: 0.95rem;
     }
 
-    /* Copy URL Helper Card */
-    .url-helper-box {
-      margin-top: 32px;
-      background: rgba(8, 12, 22, 0.85);
-      border: 1px dashed rgba(0, 245, 255, 0.35);
-      border-radius: var(--radius-md);
-      padding: 18px 22px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
+    .doc-box li {
+      margin-bottom: 8px;
     }
 
-    .url-helper-text {
-      font-family: var(--font-mono);
-      font-size: 0.86rem;
-      color: var(--cyan);
-      word-break: break-all;
-    }
-
-    .copy-btn {
-      background: rgba(255, 255, 255, 0.08);
-      border: 1px solid var(--border-subtle);
-      color: var(--text-main);
-      padding: 7px 14px;
-      border-radius: var(--radius-sm);
-      font-size: 0.82rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      white-space: nowrap;
-    }
-
-    .copy-btn:hover {
-      background: var(--cyan);
-      color: #050b14;
-      border-color: var(--cyan);
-    }
-
-    /* Support / Contact Form & Info */
-    .support-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 32px;
-    }
-
-    .contact-card {
-      background: rgba(8, 13, 24, 0.6);
-      border: 1px solid var(--border-subtle);
-      border-radius: var(--radius-md);
-      padding: 24px;
-    }
-
-    .contact-card h4 {
-      font-family: var(--font-heading);
-      font-size: 1.15rem;
-      margin-bottom: 12px;
-      color: var(--cyan);
-    }
-
-    .contact-detail {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin-top: 14px;
+    .human-note {
+      background: rgba(0, 245, 255, 0.05);
+      border-left: 3px solid var(--cyan);
+      padding: 14px 18px;
+      border-radius: 0 10px 10px 0;
+      margin: 20px 0;
+      font-size: 0.94rem;
       color: #E2E8F0;
     }
 
-    .contact-detail a {
-      color: var(--cyan);
-      text-decoration: none;
-    }
-
-    .contact-detail a:hover {
-      text-decoration: underline;
-    }
-
-    /* FAQ Accordion */
-    .faq-list {
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
+    /* FAQ */
+    .faq-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
       margin-top: 24px;
     }
 
-    .faq-item {
-      background: rgba(10, 16, 30, 0.7);
-      border: 1px solid var(--border-subtle);
-      border-radius: var(--radius-md);
-      padding: 16px 20px;
-      cursor: pointer;
-      transition: all 0.2s ease;
+    .faq-card {
+      background: rgba(9, 14, 26, 0.7);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 20px;
     }
 
-    .faq-item:hover {
-      border-color: rgba(255, 255, 255, 0.2);
-    }
-
-    .faq-question {
-      font-family: var(--font-heading);
-      font-weight: 600;
+    .faq-card h4 {
+      font-family: var(--font-display);
       font-size: 1rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+      color: #fff;
+      margin-bottom: 8px;
     }
 
-    .faq-answer {
-      display: none;
-      margin-top: 12px;
+    .faq-card p {
       color: var(--text-muted);
-      font-size: 0.92rem;
-      line-height: 1.6;
+      font-size: 0.9rem;
+      line-height: 1.55;
     }
 
-    .faq-item.open .faq-answer {
-      display: block;
+    /* Direct link pill */
+    .direct-link-bar {
+      margin-top: 30px;
+      padding-top: 20px;
+      border-top: 1px solid var(--card-border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
     }
 
-    .faq-item.open {
-      border-color: var(--cyan);
+    .direct-link-bar a {
+      color: var(--cyan);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .direct-link-bar a:hover {
+      text-decoration: underline;
     }
 
     /* Footer */
     footer {
-      border-top: 1px solid var(--border-subtle);
-      background: rgba(5, 8, 16, 0.95);
-      padding: 48px 24px 36px;
-      position: relative;
-      z-index: 1;
-    }
-
-    .footer-container {
-      max-width: 1200px;
-      margin: 0 auto;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+      border-top: 1px solid var(--card-border);
+      background: rgba(7, 10, 18, 0.95);
+      padding: 40px 24px;
       text-align: center;
-      gap: 24px;
-    }
-
-    .footer-links {
-      display: flex;
-      gap: 24px;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-
-    .footer-link {
-      color: var(--text-muted);
+      color: var(--text-dim);
       font-size: 0.88rem;
-      text-decoration: none;
-      transition: color 0.2s ease;
     }
 
-    .footer-link:hover {
+    .footer-nav {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-bottom: 16px;
+    }
+
+    .footer-nav a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.88rem;
+    }
+
+    .footer-nav a:hover {
       color: var(--cyan);
     }
 
-    .footer-copy {
-      color: var(--text-dim);
-      font-size: 0.82rem;
-    }
-
-    /* Responsive adjustments */
-    @media (max-width: 900px) {
+    /* Mobile */
+    @media (max-width: 860px) {
       .hero {
         grid-template-columns: 1fr;
         text-align: center;
         gap: 40px;
       }
-
-      .hero-title {
-        font-size: 2.6rem;
+      .hero-lead {
+        margin: 0 auto 28px;
       }
-
-      .hero-subtitle {
-        margin: 0 auto 32px;
-      }
-
-      .hero-actions {
+      .hero-buttons {
         justify-content: center;
       }
-
-      .hero-highlights {
-        margin: 0 auto;
+      .quick-perks {
+        justify-content: center;
       }
-
-      .support-grid {
+      h1 {
+        font-size: 2.6rem;
+      }
+      .faq-grid {
         grid-template-columns: 1fr;
       }
     }
 
-    @media (max-width: 680px) {
+    @media (max-width: 600px) {
       nav {
         display: none;
       }
-
-      .menu-toggle {
-        display: block;
-      }
-
-      nav.mobile-open {
-        display: flex;
-        flex-direction: column;
-        position: absolute;
-        top: 100%;
-        left: 0;
-        right: 0;
-        background: rgba(7, 10, 19, 0.98);
-        border-bottom: 1px solid var(--border-subtle);
-        padding: 24px;
-        gap: 16px;
-      }
-
-      .tab-content {
+      .doc-box {
         padding: 24px 18px;
       }
-
-      .hero-title {
-        font-size: 2.1rem;
-      }
-
-      .hero-highlights {
-        grid-template-columns: 1fr;
+      h1 {
+        font-size: 2.2rem;
       }
     }
   </style>
 </head>
 <body>
 
-  <!-- Background Orbs -->
-  <div class="ambient-bg">
-    <div class="orb orb-1"></div>
-    <div class="orb orb-2"></div>
-    <div class="orb orb-3"></div>
-  </div>
+  <!-- Ambient Glow -->
+  <div class="glow-blob blob-1"></div>
+  <div class="glow-blob blob-2"></div>
 
   <!-- Header -->
   <header>
-    <div class="nav-container">
+    <div class="nav-inner">
       <a href="#home" class="brand">
-        <div class="brand-icon">
-          <img src="assets/icon-512.png" alt="Gravity Shift Arrows Icon" onerror="this.src=''; this.innerHTML='⇄'">
-        </div>
-        <span class="brand-name">Gravity Shift</span>
+        <img src="assets/icon-512.png" alt="Gravity Shift Arrows" onerror="this.src=''; this.innerHTML='⇄'">
+        <span class="brand-title">Gravity Shift</span>
       </a>
 
-      <button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation menu">☰</button>
-
-      <nav id="navMenu">
-        <a href="#home" class="nav-link active" onclick="switchComplianceTab('home')">Home</a>
-        <a href="#features" class="nav-link" onclick="scrollToFeatures()">Features</a>
-        <a href="#privacy" class="nav-link" onclick="switchComplianceTab('privacy')">Privacy Policy</a>
-        <a href="#terms" class="nav-link" onclick="switchComplianceTab('terms')">Terms of Service</a>
-        <a href="#data-safety" class="nav-link" onclick="switchComplianceTab('data-safety')">Data Safety</a>
-        <a href="#support" class="nav-link" onclick="switchComplianceTab('support')">Support</a>
-        <a href="#compliance" class="nav-btn" onclick="switchComplianceTab('privacy')">Play Store Docs</a>
+      <nav>
+        <a href="#about" onclick="scrollToSection('about')">About</a>
+        <a href="#play-store" onclick="openTab('privacy')">Privacy Policy</a>
+        <a href="#play-store" onclick="openTab('terms')">Terms</a>
+        <a href="#play-store" onclick="openTab('support')">Contact</a>
+        <a href="#play-store" class="nav-cta" onclick="openTab('privacy')">Play Store Info</a>
       </nav>
     </div>
   </header>
 
-  <!-- Main Content -->
   <main>
     <!-- Hero Section -->
     <section class="hero" id="home">
-      <div class="hero-left">
-        <div class="hero-badge">
-          <span class="pulse"></span>
-          Now Ready for Google Play
+      <div class="hero-content">
+        <div class="indie-badge">
+          <span class="dot"></span>
+          Indie Puzzle Game for Android
         </div>
-        <h1 class="hero-title">
-          Rotate Arrows.<br>
-          <span>Bend Gravity.</span><br>
-          Solve the Grid.
-        </h1>
-        <p class="hero-subtitle">
-          A calming yet brain-teasing minimalist puzzle game. Rotate glowing neon arrows until the entire pattern clicks into place. 100% offline, zero ads, zero data tracking.
+
+        <h1>Rotate the arrows.<br><span>Align the board.</span></h1>
+
+        <p class="hero-lead">
+          A minimalist neon puzzle game made to unwind with. Turn arrows until they lock into harmony. No timers, no ads, no internet required.
         </p>
 
-        <div class="hero-actions">
-          <a href="#download-anchor" class="playstore-badge" id="downloadBadge" onclick="showPlayStoreNotice(event)">
-            <div class="playstore-icon">
-              <svg viewBox="0 0 24 24" fill="none">
-                <path d="M3.608 1.815c-.246.26-.39.638-.39 1.115v18.14c0 .477.144.855.39 1.115l.063.06 10.158-10.16v-.238L3.671 1.755l-.063.06z" fill="#00E5FF"/>
-                <path d="M17.214 15.267l-3.385-3.386v-.238l3.385-3.386.077.043 4.008 2.277c1.144.65 1.144 1.71 0 2.36l-4.008 2.277-.077.053z" fill="#FFC107"/>
-                <path d="M13.829 11.643L3.608 21.865c.378.4 1 .45 1.7.052l11.983-6.81-3.462-3.464z" fill="#FF5252"/>
-                <path d="M13.829 12.357l3.462-3.464-11.983-6.81c-.7-.398-1.322-.348-1.7.052l10.221 10.222z" fill="#00E676"/>
-              </svg>
-            </div>
-            <div class="playstore-text">
-              <div class="playstore-sub">Get it on</div>
-              <div class="playstore-main">Google Play</div>
+        <div class="hero-buttons">
+          <a href="#" class="play-btn" onclick="handlePlayClick(event)">
+            <svg viewBox="0 0 24 24" fill="none">
+              <path d="M3.608 1.815c-.246.26-.39.638-.39 1.115v18.14c0 .477.144.855.39 1.115l.063.06 10.158-10.16v-.238L3.671 1.755l-.063.06z" fill="#00E5FF"/>
+              <path d="M17.214 15.267l-3.385-3.386v-.238l3.385-3.386.077.043 4.008 2.277c1.144.65 1.144 1.71 0 2.36l-4.008 2.277-.077.053z" fill="#FFC107"/>
+              <path d="M13.829 11.643L3.608 21.865c.378.4 1 .45 1.7.052l11.983-6.81-3.462-3.464z" fill="#FF5252"/>
+              <path d="M13.829 12.357l3.462-3.464-11.983-6.81c-.7-.398-1.322-.348-1.7.052l10.221 10.222z" fill="#00E676"/>
+            </svg>
+            <div class="play-btn-text">
+              <div class="play-btn-sub">Coming Soon on</div>
+              <div class="play-btn-main">Google Play</div>
             </div>
           </a>
 
-          <button class="tab-btn" onclick="switchComplianceTab('privacy')">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-            View Privacy Policy
-          </button>
+          <a href="#play-store" class="secondary-btn" onclick="openTab('privacy')">
+            Read Privacy Policy
+          </a>
         </div>
 
-        <div class="hero-highlights">
-          <div class="highlight-item">
-            <div class="highlight-number">100+</div>
-            <div class="highlight-label">Handcrafted Levels</div>
-          </div>
-          <div class="highlight-item">
-            <div class="highlight-number">100%</div>
-            <div class="highlight-label">Offline & Private</div>
-          </div>
-          <div class="highlight-item">
-            <div class="highlight-number">0</div>
-            <div class="highlight-label">Ads or In-App Purchases</div>
-          </div>
+        <div class="quick-perks">
+          <span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+            100% Offline
+          </span>
+          <span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+            Zero Ads
+          </span>
+          <span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+            No Tracking
+          </span>
         </div>
       </div>
 
-      <!-- Live Interactive Mini-Puzzle Demo -->
-      <div class="interactive-card">
-        <div class="card-header-tag">
-          <span>✦ Interactive Mini Demo</span>
-        </div>
-        <h3 style="font-family: var(--font-heading); font-size: 1.25rem; margin-bottom: 4px;">Click Arrows to Align</h3>
-        <p style="color: var(--text-muted); font-size: 0.86rem;">Align all arrows to point UP (↑) to solve!</p>
+      <!-- Playable Board Widget -->
+      <div class="board-preview-card">
+        <div class="preview-tag">Quick Demo</div>
+        <div class="preview-subtitle">Click an arrow to turn it clockwise</div>
 
-        <div class="mini-game-container" id="miniGameGrid">
-          <!-- Rendered via JS -->
+        <div class="mini-grid" id="miniGrid">
+          <!-- Rendered by simple JS -->
         </div>
 
-        <div class="game-status" id="miniGameStatus">Moves: 0 / Rotations left to align</div>
-        <div class="game-hint">Tip: Tap rotates clockwise (90°), right click rotates counter-clockwise.</div>
+        <div class="game-message" id="gameStatus">Goal: Point all arrows UP (↑)</div>
+        <div class="game-subtip">Tip: Right-click or long-press to rotate back</div>
       </div>
     </section>
 
-    <!-- Features Section -->
-    <section class="features-section" id="features">
-      <h2 class="section-title">Built for Pure, Calming Focus</h2>
-      <p class="section-subtitle">No timers, no lives, no push notifications. Just clean logic, glowing neon aesthetics, and satisfying puzzle mechanics.</p>
+    <!-- About Section -->
+    <section id="about">
+      <div class="section-head">
+        <h2>Simple to pick up. Hard to put down.</h2>
+        <p>Built for quick 2-minute sessions on your commute or longer relaxing solve streaks before bed.</p>
+      </div>
 
       <div class="features-grid">
         <div class="feature-card">
-          <div class="feature-icon-wrapper">
-            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.19"/></svg>
-          </div>
-          <h3 class="feature-title">Rotational Logic</h3>
-          <p class="feature-desc">Tap arrows clockwise or reverse counter-clockwise. Each move shifts the grid equilibrium toward the target solution.</p>
+          <div class="feature-emoji">🔄</div>
+          <h3>Rotate & Solve</h3>
+          <p>Tap arrows to turn them clockwise, or long-press to reverse. Find the sequence that brings every arrow into sync.</p>
         </div>
 
         <div class="feature-card">
-          <div class="feature-icon-wrapper">
-            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-          </div>
-          <h3 class="feature-title">Star Mastery System</h3>
-          <p class="feature-desc">Solve within the minimum move threshold to unlock 3 gold stars. Replay any level anytime to refine your route.</p>
+          <div class="feature-emoji">⭐</div>
+          <h3>Star Ratings</h3>
+          <p>Finish puzzles under par moves to score 3 stars. You can replay any level anytime to beat your personal best.</p>
         </div>
 
         <div class="feature-card">
-          <div class="feature-icon-wrapper">
-            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-          </div>
-          <h3 class="feature-title">Absolute Privacy</h3>
-          <p class="feature-desc">No accounts, no trackers, no external servers. Player nicknames and stage progress are saved strictly inside on-device storage.</p>
+          <div class="feature-emoji">🛡️</div>
+          <h3>Truly Private</h3>
+          <p>Your nickname and level saves stay directly on your phone storage. There are no accounts, analytics, or trackers.</p>
         </div>
 
         <div class="feature-card">
-          <div class="feature-icon-wrapper">
-            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
-          </div>
-          <h3 class="feature-title">One-Handed Play</h3>
-          <p class="feature-desc">Locked to portrait mode with effortless ergonomic touch targets, making it ideal for commutes and relaxed breaks.</p>
+          <div class="feature-emoji">📱</div>
+          <h3>One-Handed Play</h3>
+          <p>Locked to portrait mode so you can comfortably play with one hand on the train or while holding a cup of coffee.</p>
         </div>
       </div>
     </section>
 
-    <!-- Google Play Compliance & Legal Documents Section -->
-    <section class="compliance-section" id="compliance">
-      <h2 class="section-title">Play Store Compliance & Policies</h2>
-      <p class="section-subtitle">Official policy disclosures, terms, data safety answers, and developer contact details required for Google Play Console submission.</p>
-
-      <div class="tabs-nav">
-        <button class="tab-btn active" id="tab-privacy-btn" onclick="switchComplianceTab('privacy')">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-          Privacy Policy
-        </button>
-        <button class="tab-btn" id="tab-terms-btn" onclick="switchComplianceTab('terms')">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
-          Terms of Service
-        </button>
-        <button class="tab-btn" id="tab-data-safety-btn" onclick="switchComplianceTab('data-safety')">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
-          Data Safety & Deletion
-        </button>
-        <button class="tab-btn" id="tab-support-btn" onclick="switchComplianceTab('support')">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-          Support & Contact
-        </button>
+    <!-- Google Play Store Compliance & Legal Section -->
+    <section id="play-store">
+      <div class="section-head">
+        <h2>App Info & Play Store Policies</h2>
+        <p>Everything required for Google Play listing review, privacy compliance, and player support.</p>
       </div>
 
-      <!-- TAB 1: PRIVACY POLICY -->
-      <div class="tab-content active" id="tab-privacy">
-        <div class="doc-prose">
-          <span class="doc-badge green">Verified Offline Application</span>
-          <span class="doc-badge blue">Play Console Ready</span>
-          
-          <h2>Privacy Policy for Gravity Shift Arrows</h2>
-          <p><strong>Effective Date:</strong> October 12, 2026</p>
-          <p>This Privacy Policy explains how <strong>Gravity Shift Arrows</strong> ("the Application", "we", "us", or "our") handles user information. We are committed to protecting your privacy, and our application is designed from the ground up to operate completely offline.</p>
+      <div class="tabs-wrapper">
+        <div class="tab-bar">
+          <button class="tab-btn active" id="tab-btn-privacy" onclick="openTab('privacy')">Privacy Policy</button>
+          <button class="tab-btn" id="tab-btn-terms" onclick="openTab('terms')">Terms of Service</button>
+          <button class="tab-btn" id="tab-btn-data" onclick="openTab('data')">Data Deletion</button>
+          <button class="tab-btn" id="tab-btn-support" onclick="openTab('support')">Support & FAQ</button>
+        </div>
 
-          <div class="info-callout">
-            <p><strong>Core Guarantee:</strong> Gravity Shift Arrows does not collect, transmit, sell, or share any personal information. No data ever leaves your device.</p>
+        <!-- TAB 1: PRIVACY POLICY -->
+        <div class="doc-box active" id="tab-privacy">
+          <h2>Privacy Policy</h2>
+          <div class="doc-date">Last updated: October 12, 2026 • Game: Gravity Shift Arrows</div>
+
+          <div class="human-note">
+            <strong>The short version:</strong> I built this game to be played offline. It doesn't connect to a server, doesn't use ads or tracking libraries, and doesn't collect any personal information from you.
           </div>
 
-          <h3>1. Information We Do NOT Collect</h3>
-          <p>We do not collect any personal data, sensitive user data, or telemetry:</p>
+          <h3>1. What Information We Collect</h3>
+          <p><strong>None.</strong> We do not ask for or collect your name, email, phone number, location, or device ID. The game has no remote backend or telemetry servers.</p>
+
+          <h3>2. What Is Saved On Your Phone</h3>
+          <p>To let you continue where you left off, the game saves a few simple things locally on your device:</p>
           <ul>
-            <li>No personal identification details (such as real name, email, phone number, address).</li>
-            <li>No location data (neither precise nor coarse GPS data).</li>
-            <li>No advertising IDs (such as Google Advertising ID / AAID).</li>
-            <li>No diagnostic crash logs, performance analytics, or behavioral telemetry sent to remote servers.</li>
-            <li>No internet communication: The application does not connect to any web API, database, or server.</li>
+            <li>The nickname you enter on your profile screen.</li>
+            <li>A one-way salted hash of your optional profile PIN (if you choose to lock your profile).</li>
+            <li>Your puzzle progress (which levels you beat and your star scores).</li>
+            <li>Your sound and vibration settings.</li>
           </ul>
+          <p>This data stays inside your phone's sandbox storage. It never gets uploaded anywhere.</p>
 
-          <h3>2. Information Stored Locally On Your Device</h3>
-          <p>The Application saves limited configuration data directly in your device’s local sandbox storage using standard Android storage mechanisms (e.g. SharedPreferences/SQLite):</p>
-          <ul>
-            <li><strong>Local Profile Name:</strong> An optional display name you choose to personalize your in-game interface.</li>
-            <li><strong>Local Passcode / PIN (Hashed):</strong> If you choose to protect your local profile, a salted one-way hash is saved locally to verify your pin.</li>
-            <li><strong>Game Progress & Preferences:</strong> Level completion records, unlocked stages, star ratings achieved, audio/vibration toggles, and high scores.</li>
-          </ul>
-          <p>This data remains strictly on your smartphone or tablet. We have no physical or technical means to access it.</p>
+          <h3>3. Ads and Analytics</h3>
+          <p>Gravity Shift Arrows contains zero ads and zero third-party tracking SDKs (like Facebook SDK, Firebase, or Google AdMob). There are no background analytic trackers.</p>
 
-          <h3>3. Third-Party Services & SDKs</h3>
-          <p>Gravity Shift Arrows does not integrate any third-party SDKs for analytics, advertising networks, payment gateways, or user tracking (such as Firebase Analytics, Facebook SDK, AdMob, or Unity Ads). The game is 100% ad-free.</p>
+          <h3>4. Children's Privacy</h3>
+          <p>Because the app collects no information from anyone, it is safe for all ages and complies with COPPA and Google Play Families policy requirements.</p>
 
-          <h3>4. Children’s Privacy (COPPA & GDPR-K Compliance)</h3>
-          <p>Because the Application collects no personal information whatsoever from any user, it fully complies with the Children’s Online Privacy Protection Act (COPPA), General Data Protection Regulation (GDPR), and Google Play Families Policy. It is safe for players of all ages.</p>
+          <h3>5. Device Permissions</h3>
+          <p>The app requests no sensitive permissions (no camera, contacts, microphone, storage files, or GPS location).</p>
 
-          <h3>5. Permissions</h3>
-          <p>Gravity Shift Arrows requests <strong>zero dangerous or sensitive permissions</strong> on your device. It does not require access to your camera, microphone, contacts, location, photos, storage files, or network state.</p>
+          <h3>6. How to Delete Your Data</h3>
+          <p>You can wipe all saved scores and profile data anytime by tapping <strong>Reset Profile</strong> inside the game, clearing app data in your Android settings, or simply uninstalling the app.</p>
 
-          <h3>6. Data Retention & Deletion</h3>
-          <p>You have full ownership and direct control over your local data. You can delete all saved progress and profile information at any moment by:</p>
-          <ul>
-            <li>Using the in-app profile reset option.</li>
-            <li>Clearing the app storage in your device's <strong>Settings → Apps → Gravity Shift Arrows → Storage & Cache → Clear Storage</strong>.</li>
-            <li>Uninstalling the Application from your device.</li>
-          </ul>
+          <h3>7. Contact</h3>
+          <p>If you have any questions about this policy, drop me an email at: <a href="mailto:support@gravityshiftarrows.app" style="color:var(--cyan)">support@gravityshiftarrows.app</a>.</p>
 
-          <h3>7. Updates to This Policy</h3>
-          <p>If we ever make modifications to this policy, the updated document will be published at this permanent URL with a revised effective date.</p>
-
-          <h3>8. Contact Us</h3>
-          <p>If you have any questions or feedback regarding this Privacy Policy, please reach out via our support email: <a href="mailto:support@gravityshiftarrows.app" style="color:var(--cyan)">support@gravityshiftarrows.app</a> (or your designated developer contact email).</p>
-
-          <!-- Direct URL Helper for Play Console -->
-          <div class="url-helper-box">
-            <div>
-              <div style="font-size: 0.75rem; text-transform: uppercase; color: var(--text-muted); margin-bottom: 4px;">Google Play Console Privacy Policy URL:</div>
-              <div class="url-helper-text" id="privacyUrlDisplay">https://[your-username].github.io/[repo-name]/privacy-policy.html</div>
-            </div>
-            <button class="copy-btn" onclick="copyCurrentUrl('privacy-policy.html')">Copy Link</button>
+          <div class="direct-link-bar">
+            <span>Direct page for Play Console link:</span>
+            <a href="privacy-policy.html">Open privacy-policy.html</a>
           </div>
         </div>
-      </div>
 
-      <!-- TAB 2: TERMS OF SERVICE -->
-      <div class="tab-content" id="tab-terms">
-        <div class="doc-prose">
-          <span class="doc-badge blue">Legal Terms</span>
+        <!-- TAB 2: TERMS OF SERVICE -->
+        <div class="doc-box" id="tab-terms">
           <h2>Terms of Service</h2>
-          <p><strong>Effective Date:</strong> October 12, 2026</p>
-          <p>Please review these Terms of Service ("Terms") carefully before using Gravity Shift Arrows ("the App"). By installing, accessing, or playing the App, you agree to be bound by these Terms.</p>
+          <div class="doc-date">Last updated: October 12, 2026</div>
 
-          <h3>1. License to Use</h3>
-          <p>We grant you a personal, non-exclusive, non-transferable, revocable license to download and play Gravity Shift Arrows on your personal Android device solely for non-commercial entertainment purposes.</p>
+          <p>By downloading or playing Gravity Shift Arrows, you agree to these simple terms:</p>
 
-          <h3>2. Intellectual Property Rights</h3>
-          <p>All visual designs, arrow artwork, puzzles, code, sound effects, brand names, and logos in Gravity Shift Arrows are the intellectual property of the developer. You may not reverse engineer, decompile, redistribute, modify, or resell the application without prior written permission.</p>
+          <h3>1. License</h3>
+          <p>You're welcome to download and enjoy the game on your personal Android devices for free, personal, non-commercial use.</p>
 
-          <h3>3. Disclaimer of Warranties</h3>
-          <p>The Application is provided on an "AS IS" and "AS AVAILABLE" basis without warranties of any kind, either express or implied. While we strive to provide a bug-free and polished experience, we do not warrant that the application will run without interruption on all hardware configurations.</p>
+          <h3>2. Intellectual Property</h3>
+          <p>The game code, level designs, artwork, and music/sound assets are created for Gravity Shift Arrows. Please do not re-upload, reverse engineer, or sell copies of the game without permission.</p>
 
-          <h3>4. Limitation of Liability</h3>
-          <p>To the maximum extent permitted by applicable law, the developer shall not be liable for any direct, indirect, incidental, or consequential damages resulting from your use of or inability to use the Application.</p>
+          <h3>3. Disclaimer</h3>
+          <p>The game is provided "as is". While we do our best to test across various phones and Android versions, we cannot guarantee it will run flawlessly on every custom ROM or device.</p>
 
-          <h3>5. Changes to the App & Terms</h3>
-          <p>We reserve the right to update, modify, or discontinue features of the Application or update these Terms as needed. Continued play of the App following any changes constitutes acceptance of the new Terms.</p>
+          <h3>4. Questions</h3>
+          <p>Reach out anytime at <a href="mailto:support@gravityshiftarrows.app" style="color:var(--cyan)">support@gravityshiftarrows.app</a>.</p>
 
-          <div class="url-helper-box">
-            <div>
-              <div style="font-size: 0.75rem; text-transform: uppercase; color: var(--text-muted); margin-bottom: 4px;">Terms of Service Permanent URL:</div>
-              <div class="url-helper-text" id="termsUrlDisplay">https://[your-username].github.io/[repo-name]/terms.html</div>
-            </div>
-            <button class="copy-btn" onclick="copyCurrentUrl('terms.html')">Copy Link</button>
+          <div class="direct-link-bar">
+            <span>Direct page for Play Console link:</span>
+            <a href="terms.html">Open terms.html</a>
           </div>
         </div>
-      </div>
 
-      <!-- TAB 3: DATA SAFETY & DELETION -->
-      <div class="tab-content" id="tab-data-safety">
-        <div class="doc-prose">
-          <span class="doc-badge green">Google Play Data Safety Section</span>
-          <h2>Data Safety & Account Deletion Declaration</h2>
-          <p>This section provides exact answers for the <strong>Data Safety form</strong> in Google Play Console, compliant with Google's Play Console requirements.</p>
+        <!-- TAB 3: DATA DELETION -->
+        <div class="doc-box" id="tab-data">
+          <h2>Data & Account Deletion</h2>
+          <div class="doc-date">Last updated: October 12, 2026</div>
 
-          <div class="info-callout">
-            <p><strong>Data Safety Form Quick Answer:</strong> In Google Play Console under Data Safety, select: <strong>"No, the app does not collect or share any user data"</strong>.</p>
+          <div class="human-note">
+            Because Gravity Shift Arrows runs completely offline, there are no online accounts or cloud databases to delete from. Everything is saved only on your phone, so deleting it is instant.
           </div>
 
-          <h3>Play Console Questionnaire Answers</h3>
-          <table style="width: 100%; border-collapse: collapse; margin: 18px 0; font-size: 0.92rem;">
-            <thead>
-              <tr style="border-bottom: 2px solid var(--border-subtle); text-align: left;">
-                <th style="padding: 10px; color: var(--cyan);">Question</th>
-                <th style="padding: 10px; color: var(--cyan);">Answer</th>
-                <th style="padding: 10px; color: var(--cyan);">Notes</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr style="border-bottom: 1px solid var(--border-subtle);">
-                <td style="padding: 10px; font-weight: 600;">Does your app collect or share any of the required user data types?</td>
-                <td style="padding: 10px; color: var(--emerald); font-weight: 700;">No</td>
-                <td style="padding: 10px; color: var(--text-muted);">All game data is offline only.</td>
-              </tr>
-              <tr style="border-bottom: 1px solid var(--border-subtle);">
-                <td style="padding: 10px; font-weight: 600;">Is all user data collected encrypted in transit?</td>
-                <td style="padding: 10px; font-weight: 600;">N/A</td>
-                <td style="padding: 10px; color: var(--text-muted);">No data transmitted over the internet.</td>
-              </tr>
-              <tr style="border-bottom: 1px solid var(--border-subtle);">
-                <td style="padding: 10px; font-weight: 600;">Do you provide a way for users to request data deletion?</td>
-                <td style="padding: 10px; color: var(--emerald); font-weight: 700;">Yes</td>
-                <td style="padding: 10px; color: var(--text-muted);">Instant self-service via in-app reset or uninstall.</td>
-              </tr>
-              <tr>
-                <td style="padding: 10px; font-weight: 600;">Is the app designed for children?</td>
-                <td style="padding: 10px; font-weight: 600;">All Ages / 13+</td>
-                <td style="padding: 10px; color: var(--text-muted);">Safe for everyone; zero tracking.</td>
-              </tr>
-            </tbody>
-          </table>
-
-          <h3>User Data Deletion Request Process</h3>
-          <p>Because Gravity Shift Arrows does not maintain any remote user database, server accounts, or cloud logins, user data deletion is instantaneous and requires no wait time or server requests:</p>
+          <h3>How to Erase Your Saved Game Data:</h3>
           <ul>
-            <li><strong>Method 1 (Within App):</strong> Navigate to the local Profile screen and select "Reset Profile / Clear Data". This erases all progress from device storage.</li>
-            <li><strong>Method 2 (Android Settings):</strong> Open your device <strong>Settings → Apps → Gravity Shift Arrows → Storage & cache → Clear storage</strong>.</li>
-            <li><strong>Method 3 (Uninstall):</strong> Uninstalling the application completely purges all sandbox data created by the app.</li>
+            <li><strong>In the game:</strong> Go to your Profile screen and tap <em>"Reset Profile"</em>. All completed levels and star ratings will be cleared instantly.</li>
+            <li><strong>From your phone settings:</strong> Open <em>Settings → Apps → Gravity Shift Arrows → Storage & cache → Clear storage</em>.</li>
+            <li><strong>By uninstalling:</strong> Uninstalling the game completely wipes all local files created by the app.</li>
           </ul>
 
-          <div class="url-helper-box">
-            <div>
-              <div style="font-size: 0.75rem; text-transform: uppercase; color: var(--text-muted); margin-bottom: 4px;">Data Deletion Policy URL for Play Console:</div>
-              <div class="url-helper-text" id="dataUrlDisplay">https://[your-username].github.io/[repo-name]/data-deletion.html</div>
-            </div>
-            <button class="copy-btn" onclick="copyCurrentUrl('data-deletion.html')">Copy Link</button>
+          <div class="direct-link-bar">
+            <span>Direct page for Play Console link:</span>
+            <a href="data-deletion.html">Open data-deletion.html</a>
           </div>
         </div>
-      </div>
 
-      <!-- TAB 4: SUPPORT & CONTACT -->
-      <div class="tab-content" id="tab-support">
-        <div class="doc-prose">
-          <span class="doc-badge blue">App Support</span>
-          <h2>Player Support & Inquiries</h2>
-          <p>Need help with a puzzle, have a feature suggestion, or found an issue? We're here to help.</p>
+        <!-- TAB 4: SUPPORT & FAQ -->
+        <div class="doc-box" id="tab-support">
+          <h2>Support & Player FAQ</h2>
+          <div class="doc-date">Got questions or ran into a bug? We've got answers.</div>
 
-          <div class="support-grid">
-            <div class="contact-card">
-              <h4>Developer Contact</h4>
-              <p style="font-size: 0.9rem; color: var(--text-muted);">Official developer contact for Google Play inquiries and player bug reports.</p>
-              
-              <div class="contact-detail">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-                <span>Email: <a href="mailto:support@gravityshiftarrows.app">support@gravityshiftarrows.app</a></span>
-              </div>
-              <div class="contact-detail">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-                <span>Response Time: Typically within 24–48 hours</span>
-              </div>
+          <p>Email me directly at <a href="mailto:support@gravityshiftarrows.app" style="color:var(--cyan)">support@gravityshiftarrows.app</a>. I try to reply to player questions and bug reports within 24 to 48 hours.</p>
+
+          <div class="faq-grid">
+            <div class="faq-card">
+              <h4>Do I need Wi-Fi or data to play?</h4>
+              <p>Nope! The game is 100% offline. Great for flights, subways, or whenever you don't have signal.</p>
             </div>
 
-            <div class="contact-card">
-              <h4>Game Information</h4>
-              <p style="font-size: 0.9rem; color: var(--text-muted);">Package and build specification details.</p>
-              <div class="contact-detail">
-                <strong>App Name:</strong> Gravity Shift Arrows
-              </div>
-              <div class="contact-detail">
-                <strong>Platform:</strong> Android (Flutter native engine)
-              </div>
-              <div class="contact-detail">
-                <strong>Offline Support:</strong> Fully supported without connection
-              </div>
+            <div class="faq-card">
+              <h4>Are there in-app purchases or paywalls?</h4>
+              <p>No paywalls, no energy systems, and no microtransactions. All levels are unlocked purely by playing.</p>
+            </div>
+
+            <div class="faq-card">
+              <h4>How do I turn an arrow the other way?</h4>
+              <p>A quick tap turns it clockwise (90°). A long press rotates it counter-clockwise.</p>
+            </div>
+
+            <div class="faq-card">
+              <h4>How do I get 3 stars on a level?</h4>
+              <p>Solve the puzzle in fewer or equal moves to the par target. You can replay any completed stage to improve your score.</p>
             </div>
           </div>
 
-          <h3 style="margin-top: 36px;">Frequently Asked Questions</h3>
-          <div class="faq-list">
-            <div class="faq-item" onclick="toggleFaq(this)">
-              <div class="faq-question">
-                <span>Does the game require an active internet connection?</span>
-                <span>+</span>
-              </div>
-              <div class="faq-answer">
-                No. Gravity Shift Arrows runs entirely offline on your phone. You can play on airplanes, subways, or anywhere without mobile network connectivity.
-              </div>
-            </div>
-
-            <div class="faq-item" onclick="toggleFaq(this)">
-              <div class="faq-question">
-                <span>Are there any in-app purchases or paywalls?</span>
-                <span>+</span>
-              </div>
-              <div class="faq-answer">
-                No. All 100+ levels and game features are completely free and unlocked through gameplay. There are no virtual currencies, lives, or microtransactions.
-              </div>
-            </div>
-
-            <div class="faq-item" onclick="toggleFaq(this)">
-              <div class="faq-question">
-                <span>How do I rotate an arrow in reverse?</span>
-                <span>+</span>
-              </div>
-              <div class="faq-answer">
-                Tap an arrow to rotate it 90 degrees clockwise. Long-press on an arrow (or right click on desktop) to rotate it counter-clockwise.
-              </div>
-            </div>
-
-            <div class="faq-item" onclick="toggleFaq(this)">
-              <div class="faq-question">
-                <span>How is my 3-star rating calculated?</span>
-                <span>+</span>
-              </div>
-              <div class="faq-answer">
-                Each level has a minimum move par. Completing the puzzle in fewer or equal moves earns 3 stars. You can replay any solved stage anytime to improve your score.
-              </div>
-            </div>
-          </div>
-
-          <div class="url-helper-box">
-            <div>
-              <div style="font-size: 0.75rem; text-transform: uppercase; color: var(--text-muted); margin-bottom: 4px;">Support Page URL for Play Console:</div>
-              <div class="url-helper-text" id="supportUrlDisplay">https://[your-username].github.io/[repo-name]/support.html</div>
-            </div>
-            <button class="copy-btn" onclick="copyCurrentUrl('support.html')">Copy Link</button>
+          <div class="direct-link-bar">
+            <span>Direct page for Play Console link:</span>
+            <a href="support.html">Open support.html</a>
           </div>
         </div>
       </div>
     </section>
   </main>
 
-  <!-- Footer -->
   <footer>
-    <div class="footer-container">
-      <div class="brand">
-        <div class="brand-icon" style="width: 32px; height: 32px;">
-          <img src="assets/icon-512.png" alt="Gravity Shift Arrows" onerror="this.src=''; this.innerHTML='⇄'">
-        </div>
-        <span class="brand-name" style="font-size: 1.1rem;">Gravity Shift Arrows</span>
-      </div>
-
-      <div class="footer-links">
-        <a href="#home" class="footer-link" onclick="switchComplianceTab('home')">Home</a>
-        <a href="#features" class="footer-link" onclick="scrollToFeatures()">Gameplay</a>
-        <a href="#privacy" class="footer-link" onclick="switchComplianceTab('privacy')">Privacy Policy</a>
-        <a href="#terms" class="footer-link" onclick="switchComplianceTab('terms')">Terms of Service</a>
-        <a href="#data-safety" class="footer-link" onclick="switchComplianceTab('data-safety')">Data Safety</a>
-        <a href="#support" class="footer-link" onclick="switchComplianceTab('support')">Support & FAQ</a>
-      </div>
-
-      <div class="footer-copy">
-        &copy; 2026 Gravity Shift Arrows. All rights reserved. Created for Google Play Store.
-      </div>
+    <div class="footer-nav">
+      <a href="#home">Home</a>
+      <a href="#about" onclick="scrollToSection('about')">About</a>
+      <a href="privacy-policy.html">Privacy Policy</a>
+      <a href="terms.html">Terms</a>
+      <a href="data-deletion.html">Data Deletion</a>
+      <a href="support.html">Support</a>
     </div>
+    <p>© 2026 Gravity Shift Arrows. Made by an indie game developer.</p>
   </footer>
 
   <script>
-    // Tab switching logic
-    function switchComplianceTab(tabName) {
-      if (tabName === 'home') {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-        return;
-      }
-
-      const tabs = ['privacy', 'terms', 'data-safety', 'support'];
+    // Tab switching
+    function openTab(tabId) {
+      const tabs = ['privacy', 'terms', 'data', 'support'];
       tabs.forEach(t => {
-        const btn = document.getElementById(`tab-${t}-btn`);
+        const btn = document.getElementById(`tab-btn-${t}`);
         const content = document.getElementById(`tab-${t}`);
         if (btn) btn.classList.remove('active');
         if (content) content.classList.remove('active');
       });
 
-      const activeBtn = document.getElementById(`tab-${tabName}-btn`);
-      const activeContent = document.getElementById(`tab-${tabName}`);
+      const activeBtn = document.getElementById(`tab-btn-${tabId}`);
+      const activeContent = document.getElementById(`tab-${tabId}`);
       if (activeBtn) activeBtn.classList.add('active');
       if (activeContent) activeContent.classList.add('active');
 
-      const compSection = document.getElementById('compliance');
-      if (compSection) {
-        compSection.scrollIntoView({ behavior: 'smooth' });
+      const section = document.getElementById('play-store');
+      if (section && window.scrollY < section.offsetTop - 100) {
+        section.scrollIntoView({ behavior: 'smooth' });
       }
-
-      // Update URL hash without jump
-      history.replaceState(null, null, `#${tabName}`);
     }
 
-    function scrollToFeatures() {
-      const feat = document.getElementById('features');
-      if (feat) feat.scrollIntoView({ behavior: 'smooth' });
+    function scrollToSection(id) {
+      const el = document.getElementById(id);
+      if (el) el.scrollIntoView({ behavior: 'smooth' });
     }
 
-    // Interactive mini-game demo
-    // 3x3 grid: Goal is all angles = 0 (pointing UP)
-    const initialGrid = [
-      { angle: 90 },  { angle: 180 }, { angle: 270 },
-      { angle: 180 }, { angle: 90 },  { angle: 0 },
-      { angle: 270 }, { angle: 0 },   { angle: 90 }
+    function handlePlayClick(e) {
+      e.preventDefault();
+      alert("Gravity Shift Arrows is currently being submitted to the Google Play Store! Check back soon for the official download link.");
+    }
+
+    // Playable 3x3 Mini Grid
+    // Arrows with initial rotations
+    let grid = [
+      { r: 90 },  { r: 180 }, { r: 270 },
+      { r: 180 }, { r: 90 },  { r: 0 },
+      { r: 270 }, { r: 0 },   { r: 90 }
     ];
 
-    let gridState = JSON.parse(JSON.stringify(initialGrid));
-    let moveCount = 0;
+    let moves = 0;
 
-    function renderMiniGame() {
-      const container = document.getElementById('miniGameGrid');
-      if (!container) return;
-      container.innerHTML = '';
+    function renderGrid() {
+      const el = document.getElementById('miniGrid');
+      if (!el) return;
+      el.innerHTML = '';
 
-      let allAligned = true;
+      let allSolved = true;
 
-      gridState.forEach((cell, idx) => {
-        const isAligned = (cell.angle % 360 === 0);
-        if (!isAligned) allAligned = false;
+      grid.forEach((item, i) => {
+        const isUp = (item.r % 360 === 0);
+        if (!isUp) allSolved = false;
 
-        const cellEl = document.createElement('div');
-        cellEl.className = `arrow-cell ${isAligned ? 'aligned' : ''}`;
-        cellEl.title = 'Click to rotate clockwise, right-click for counter-clockwise';
+        const cell = document.createElement('div');
+        cell.className = `arrow-box ${isUp ? 'solved' : ''}`;
+        cell.title = 'Click to turn clockwise, right-click to turn counter-clockwise';
 
-        cellEl.innerHTML = `
-          <svg class="arrow-svg" style="transform: rotate(${cell.angle}deg);" viewBox="0 0 24 24" fill="none">
+        cell.innerHTML = `
+          <svg style="transform: rotate(${item.r}deg);" viewBox="0 0 24 24" fill="none">
             <path d="M12 19V5M12 5L6 11M12 5L18 11" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
         `;
 
-        cellEl.addEventListener('click', () => rotateCell(idx, 90));
-        cellEl.addEventListener('contextmenu', (e) => {
+        cell.onclick = () => {
+          grid[i].r += 90;
+          moves++;
+          renderGrid();
+        };
+
+        cell.oncontextmenu = (e) => {
           e.preventDefault();
-          rotateCell(idx, -90);
-        });
+          grid[i].r -= 90;
+          moves++;
+          renderGrid();
+        };
 
-        container.appendChild(cellEl);
+        el.appendChild(cell);
       });
 
-      const statusEl = document.getElementById('miniGameStatus');
-      if (allAligned) {
-        statusEl.className = 'game-status win';
-        statusEl.innerHTML = `🎉 Solved in ${moveCount} moves! Pattern perfectly aligned!`;
+      const status = document.getElementById('gameStatus');
+      if (allSolved) {
+        status.className = 'game-message win';
+        status.innerHTML = `🎉 Solved in ${moves} moves! Nice job!`;
       } else {
-        statusEl.className = 'game-status';
-        statusEl.innerText = `Moves: ${moveCount} • Turn arrows until all point UP (↑)`;
+        status.className = 'game-message';
+        status.innerText = `Moves: ${moves} • Turn arrows until all point UP (↑)`;
       }
     }
 
-    function rotateCell(idx, deg) {
-      gridState[idx].angle += deg;
-      moveCount++;
-      renderMiniGame();
-    }
-
-    // FAQ toggle
-    function toggleFaq(item) {
-      item.classList.toggle('open');
-      const symbol = item.querySelector('.faq-question span:last-child');
-      if (symbol) {
-        symbol.textContent = item.classList.contains('open') ? '−' : '+';
-      }
-    }
-
-    // Notice for play store badge
-    function showPlayStoreNotice(e) {
-      e.preventDefault();
-      alert('Gravity Shift Arrows is currently in preparation for submission to the Google Play Store! Once approved, this badge will take you directly to the Play Store listing.');
-    }
-
-    // Dynamic hostname display for helper links
-    function updateUrlDisplays() {
-      const base = window.location.origin + window.location.pathname.replace(/\/index\.html$/, '').replace(/\/$/, '');
-      const priv = document.getElementById('privacyUrlDisplay');
-      const terms = document.getElementById('termsUrlDisplay');
-      const data = document.getElementById('dataUrlDisplay');
-      const supp = document.getElementById('supportUrlDisplay');
-
-      if (priv) priv.innerText = `${base}/privacy-policy.html`;
-      if (terms) terms.innerText = `${base}/terms.html`;
-      if (data) data.innerText = `${base}/data-deletion.html`;
-      if (supp) supp.innerText = `${base}/support.html`;
-    }
-
-    function copyCurrentUrl(page) {
-      const base = window.location.origin + window.location.pathname.replace(/\/index\.html$/, '').replace(/\/$/, '');
-      const fullUrl = `${base}/${page}`;
-      navigator.clipboard.writeText(fullUrl).then(() => {
-        alert(`Copied link to clipboard:\n${fullUrl}`);
-      }).catch(() => {
-        prompt('Copy this URL:', fullUrl);
-      });
-    }
-
-    // Handle hash on initial load
     window.addEventListener('DOMContentLoaded', () => {
-      renderMiniGame();
-      updateUrlDisplays();
-
+      renderGrid();
       const hash = window.location.hash.replace('#', '');
-      if (['privacy', 'terms', 'data-safety', 'support'].includes(hash)) {
-        switchComplianceTab(hash);
-      }
-
-      // Mobile menu toggle
-      const toggle = document.getElementById('menuToggle');
-      const nav = document.getElementById('navMenu');
-      if (toggle && nav) {
-        toggle.addEventListener('click', () => {
-          nav.classList.toggle('mobile-open');
-        });
+      if (['privacy', 'terms', 'data', 'support'].includes(hash)) {
+        openTab(hash);
       }
     });
   </script>
